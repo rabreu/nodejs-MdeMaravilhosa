@@ -20,7 +20,7 @@ const getMaravilhosaById = (request, response)=> {
 
 //addMaravilhosa 
 const addMaravilhosa = (request, response) => {
-    if(!checkMaravilhosaJson(request.body))
+    if(!validateMaravilhosaJson(request.body))
         return response.status(400).send("Verifique se os campos estão corretos.")  
     
     const { id, name, photo, subtitle, about, phrase, history, addedBy } = request.body
@@ -44,7 +44,7 @@ const addMaravilhosa = (request, response) => {
 
 //updateMaravilhosa 
 const updateMaravilhosa = (request, response) => {
-    if(!checkMaravilhosaJson(request.body))
+    if(!validateMaravilhosaJson(request.body))
         return response.status(400).send("Verifique se os campos estão corretos.")  
     const id = parseInt(request.params.id)
     const { name, photo, subtitle, about, phrase, history, addedBy } = request.body
@@ -77,8 +77,18 @@ const deleteMaravilhosa = (request, response) => {
     return response.status(400).send('Maravilhosa fake não encontrada.')
 }
 
-const checkMaravilhosaJson = (maravilhosa) => {
-    if(maravilhosa.hasOwnProperty("id"), maravilhosa.hasOwnProperty("name"), maravilhosa.hasOwnProperty("photo"), maravilhosa.hasOwnProperty("subtitle"), maravilhosa.hasOwnProperty("about"), maravilhosa.hasOwnProperty("phrase"), maravilhosa.hasOwnProperty("history"), maravilhosa.hasOwnProperty("addedBy"))
+const validateMaravilhosaJson = (maravilhosa) => {
+    const isValid = (
+        maravilhosa.hasOwnProperty("id"), 
+        maravilhosa.hasOwnProperty("name"),
+        maravilhosa.hasOwnProperty("photo"), 
+        maravilhosa.hasOwnProperty("subtitle"), 
+        maravilhosa.hasOwnProperty("about"),
+        maravilhosa.hasOwnProperty("phrase"),
+        maravilhosa.hasOwnProperty("history"),
+        maravilhosa.hasOwnProperty("addedBy")
+    )
+    if(isValid)
         return true
     return false
 }
