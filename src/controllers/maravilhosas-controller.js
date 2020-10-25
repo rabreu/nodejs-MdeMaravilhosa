@@ -20,7 +20,11 @@ const getMaravilhosaById = (request, response)=> {
 
 //addMaravilhosa 
 const addMaravilhosa = (request, response) => {
+    if(!checkMaravilhosaJson(request.body))
+        return response.status(400).send("Verifique se os campos estão corretos.")  
+    
     const { id, name, photo, subtitle, about, phrase, history, addedBy } = request.body
+    
     const novaMaravilhosa = {
         "id": id,
         "name": name,
@@ -40,6 +44,8 @@ const addMaravilhosa = (request, response) => {
 
 //updateMaravilhosa 
 const updateMaravilhosa = (request, response) => {
+    if(!checkMaravilhosaJson(request.body))
+        return response.status(400).send("Verifique se os campos estão corretos.")  
     const id = parseInt(request.params.id)
     const { name, photo, subtitle, about, phrase, history, addedBy } = request.body
     const updateMaravilhosa = {
@@ -50,7 +56,7 @@ const updateMaravilhosa = (request, response) => {
         "about": about,
         "phrase": phrase,
         "history": history,
-        "addedBy":addedBy
+        "addedBy": addedBy
     }
     const update = model.updateData(updateMaravilhosa)
 
@@ -71,6 +77,11 @@ const deleteMaravilhosa = (request, response) => {
     return response.status(400).send('Maravilhosa fake não encontrada.')
 }
 
+const checkMaravilhosaJson = (maravilhosa) => {
+    if(maravilhosa.hasOwnProperty("id"), maravilhosa.hasOwnProperty("name"), maravilhosa.hasOwnProperty("photo"), maravilhosa.hasOwnProperty("subtitle"), maravilhosa.hasOwnProperty("about"), maravilhosa.hasOwnProperty("phrase"), maravilhosa.hasOwnProperty("history"), maravilhosa.hasOwnProperty("addedBy"))
+        return true
+    return false
+}
 
 module.exports = {
     getMaravilhosas,
