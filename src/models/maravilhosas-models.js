@@ -16,13 +16,17 @@ const selectDataById = (id)=>{
 
 //insertData
 const insertData = (novaMaravilhosa) => {
-    const existeMaravilhosa = data.find(maravilhosa => maravilhosa.id == novaMaravilhosa.id)
-    if(!existeMaravilhosa) {
-        data.push(novaMaravilhosa)
-        return data.find(maravilhosa => maravilhosa.id == novaMaravilhosa.id);
-    }
+    const existeIdMaravilhosa = data.find(maravilhosa => maravilhosa.id == novaMaravilhosa.id)
+    const existeNomeMaravilhosa = data.find(maravilhosa => maravilhosa.name === novaMaravilhosa.name)
 
-    return false;
+    if(existeIdMaravilhosa)
+        return { "success": false, "message": "Id já existe no banco de dados de maravilhosas." };
+
+    if(existeNomeMaravilhosa)
+        return { "success": false, "message": "Maravilhosa já existe em nosso banco de dados." };
+
+    data.push(novaMaravilhosa)
+    return { "success": true, "message": "Maravilhosa adicionada.", "maravilhosa": data.find(maravilhosa => maravilhosa.id == novaMaravilhosa.id)};
 }
 
 //updateData

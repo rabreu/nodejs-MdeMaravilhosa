@@ -31,13 +31,11 @@ const addMaravilhosa = (request, response) => {
         "history": history,
         "addedBy":addedBy
     }
-
     const adicionarMaravilhosa = model.insertData(novaMaravilhosa)
-
-    if(adicionarMaravilhosa)
-        return response.status(201).json(adicionarMaravilhosa)
-
-    return response.status(400).send("Erro.")
+    if(adicionarMaravilhosa.success)
+        return response.status(201).json(adicionarMaravilhosa.maravilhosa)
+    
+    return response.status(400).send(adicionarMaravilhosa.message)   
 }
 
 //updateMaravilhosa 
