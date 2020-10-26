@@ -60,10 +60,10 @@ const updateMaravilhosa = (request, response) => {
     }
     const update = model.updateData(updateMaravilhosa)
 
-    if(update)
-        return response.status(200).json(update)
+    if(update.success)
+        return response.status(200).json(update.maravilhosa)
 
-    return response.status(400).send("Erro. Maravilhosa não atualizada.")
+    return response.status(400).send(update.message)
 }
 
 //deleteMaravilhosa

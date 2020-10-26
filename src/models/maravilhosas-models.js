@@ -18,6 +18,7 @@ const selectDataById = (id)=>{
 const insertData = (novaMaravilhosa) => {
     const existeIdMaravilhosa = data.find(maravilhosa => maravilhosa.id == novaMaravilhosa.id)
     const existeNomeMaravilhosa = data.find(maravilhosa => maravilhosa.name === novaMaravilhosa.name)
+    // const teste = data.find(maravilhosa => maravilhosa.id == novaMaravilhosa.id || maravilhosa.name === novaMaravilhosa.name)
 
     if(existeIdMaravilhosa)
         return { "success": false, "message": "Id já existe no banco de dados de maravilhosas." };
@@ -33,11 +34,19 @@ const insertData = (novaMaravilhosa) => {
 const updateData = (updateMaravilhosa)=>{
     const idsMaravilhosa = data.map(maravilhosa => maravilhosa.id)
     const indexMaravilhosa = idsMaravilhosa.indexOf(updateMaravilhosa.id)
-    if(indexMaravilhosa > -1) {
-        data.splice(indexMaravilhosa, 1, updateMaravilhosa)
-        return data[indexMaravilhosa]
+
+    if(indexMaravilhosa < 0) {
+        return { "success": false, "message": "Id não existe no banco de dados." };
     }
-    return false
+
+    const existeNomeMaravilhosa = data.find(maravilhosa => maravilhosa.name === updateMaravilhosa.name && maravilhosa.id != updateMaravilhosa.id)
+
+    if(existeNomeMaravilhosa)
+        return { "success": false, "message": "Maravilhosa já existe em nosso banco de dados." };
+
+    data.splice(indexMaravilhosa, 1, updateMaravilhosa)
+    return { "success": true, "message": "Maravilhosa atualizada.", "maravilhosa": data.find(maravilhosa => maravilhosa.id == updateMaravilhosa.id)};
+
 }
 
 //deleteData
